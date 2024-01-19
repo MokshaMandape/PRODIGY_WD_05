@@ -1,83 +1,56 @@
-let boxes = document.querySelectorAll(".box");
+let button = document.querySelector(".button");
+let inputvalue = document.querySelector(".search-box");
+let temp = document.querySelector(".current .temp");
+let description = document.querySelector(".current .weather");
+let city = document.querySelector(".location .city");
+let date = document.querySelector(".location .date");
 
-let turn = "X";
-let isGameOver = false;
+button.addEventListener("click", function () {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${inputvalue.value}&units=metric&appid=03a094de2fbed757402784c8ab602833`
+  )
+    .then((response) => response.json())
+    .then(displayData)
+    .catch((err) => alert("Please Enter Correct City Name"));
+});
 
-boxes.forEach(e =>{
-    e.innerHTML = "";
-    e.addEventListener("click", ()=>{
-        if(!isGameOver && e.innerHTML === ""){
-            e.innerHTML = turn;
-            checkWin();
-            checkDraw();
-            changeTurn();
-        }
-    })
-})
+const displayData = (weather) => {
+  temp.innerHTML = `${Math.round(weather.main.temp)}°C`;
+  description.innerText = `${weather.weather[0].description}`;
+  city.innerText = `${weather.name}, ${weather.sys.country}`;
+  let now = new Date();
+  date.innerText = dateBuilder(now);
+};
 
-function changeTurn(){
-    if(turn === "X"){
-        turn = "O";
-        document.querySelector(".bg").style.left = "85px";
-    }
-    else{
-        turn = "X";
-        document.querySelector(".bg").style.left = "0";
-    }
+function dateBuilder(d) {
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
+  let day = days[d.getDay()];
+  let date = d.getDate();
+  let month = months[d.getMonth()];
+  let year = d.getFullYear();
+
+  return `${day} ${date} ${month} ${year}`;
 }
-
-function checkWin(){
-    let winConditions = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-    ]
-    for (let i = 0;i<winConditions.length; i++){
-        let v0 = boxes[winConditions[i][0]].innerHTML;
-        let v1 = boxes[winConditions[i][1]].innerHTML;
-        let v2 = boxes[winConditions[i][2]].innerHTML;
-
-        if(v0 != "" && v0 === v1 && v0 === v2){
-            isGameOver = true;
-            document.querySelector("#results").innerHTML = turn + " Win";
-            document.querySelector("#play-again").style.display = "inline";
-
-            for(j=0; j<3; j++){
-               boxes[winConditions[i][j]].style.backgroundColor = "#08D9D6";
-               boxes[winConditions[i][j]].style.color = "#000";
-            }
-        }
-
-    }
-
-}
-
-function checkDraw(){
-    if(!isGameOver){
-        let isDraw = true;
-        boxes.forEach(e =>{
-            if(e.innerHTML === "") isDraw = false;
-        })
-
-        if(isDraw){
-            isGameOver = true;
-            document.querySelector("#results").innerHTML ="Draw"
-            document.querySelector("#play-again").style.display = "inline"
-        }
-    }
-}
-
-document.querySelector("#play-again").addEventListener("click", ()=>{
-    isGameOver = false;
-    turn = "X";
-    document.querySelector(".bg").style.left = "0";
-    document.querySelector("#results").innerHTML = "";
-    document.querySelector("#play-again").style.display = "none";
-
-    boxes.forEach(e =>{
-        e.innerHTML = "";
-        e.style.removeProperty("background-color");
-        e.style.color = "#fff";
-    })
-})

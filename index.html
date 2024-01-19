@@ -1,32 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic_Tac_Toe</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="turn-container">
-        <h3>Turn For</h3>
-        <div class="turn-box align">X</div>
-        <div class="turn-box align">O</div>
-        <div class="bg"></div>
-    </div>
-    <div class="main-grid">
-        <div class="box align">0</div>
-        <div class="box align">1</div>
-        <div class="box align">2</div>
-        <div class="box align">3</div>
-        <div class="box align">4</div>
-        <div class="box align">5</div>
-        <div class="box align">6</div>
-        <div class="box align">7</div>
-        <div class="box align">8</div>
-    </div>
-    <h2 id="results"></h2>
-    <button id="play-again">Play Again</button>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Weather app</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-    <script src="script.js"></script>
-</body>
+  <body>
+    <div class="app">
+      <header>
+        <input
+          type="text"
+          autocomplete="off"
+          class="search-box"
+          placeholder="Search for your city..."
+        />
+        <button class="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </header>
+
+      <main>
+        <section class="location">
+          <div class="city"></div>
+          <div class="date"></div>
+        </section>
+
+        <div class="current">
+          <div class="temp"><span></span></div>
+          <div class="weather"></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
 </html>
